@@ -1,0 +1,12 @@
+# System files
+.DS_Store
+
+# IDE profiles
+.idea/
+*/.idea/
+*.iml
+.classpath
+.project
+.settings
+.vscode
+codeship.aes
