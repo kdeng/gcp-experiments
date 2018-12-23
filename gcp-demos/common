@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Service Account Keys
+ACCOUNT_KEY_FILE="$GCP_SERVICE_ACCOUNT_KEY_FILE_PATH"
+
+# Project ID
+PROJECT_ID="$GCP_PROJECT_ID"
+
+# Cluster Name
+CLUSTER_NAME="GCP_CLUSTER_NAME"
+
+# Cluster Zone
+CLUSTER_ZONE="$GCP_CLUSTER_ZONE"
+
+# Number of nodes
+NUM_NODES=3

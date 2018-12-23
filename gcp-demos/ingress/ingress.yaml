@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: basic-ingress
+  namespace: live
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx-app-service
+          servicePort: 8001
+      - path: /v2/
+        backend:
+          serviceName: hello-app-service
+          servicePort: 8002

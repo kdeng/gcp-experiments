@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Force the shell to immediately if a single command exits with a non-zero exit value.
+set -e
+
+# Turn on / off the debug mode
+#set -x
+
+# Load configuration
+source ./common
+
+echo -e "Current project configuration is:"
+echo -e "-> Project ID      = $PROJECT_ID"
+echo -e "-> Cluster Name    = $CLUSTER_NAME"
+echo -e "-> Cluster Zone    = $CLUSTER_ZONE"
+echo -e "-> Number Of Nodes = $NUM_NODES"
+echo -e "\n"
+
+# Get authentication credentials for the cluster
+gcloud container clusters get-credentials "$CLUSTER_NAME" \
+    --project="$PROJECT_ID" \
+    --zone="$CLUSTER_ZONE"
+
+# Create dev and live namespaces
+echo -e "Creating namespace ..."
+find ./namespaces -type f -name "*.yaml" -exec kubectl create -f {} \;
+
+# List all namespaces
+echo -e "Listing all namespaces ..."
+kubectl get namespaces --show-labels
+
+# Apply POD to cluster by using deployment.yaml
+echo -e "Deploy applications ..."
+kubectl apply -f ./deployment/deployment.1.yaml
+kubectl apply -f ./deployment/deployment.2.yaml
+
+# List deployment under namespace live
+kubectl get deployment --namespace=live
+
+# List pods
+kubectl get pods --namespace=live
+
