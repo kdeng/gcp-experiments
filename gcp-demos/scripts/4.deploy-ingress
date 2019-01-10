@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Force the shell to immediately if a single command exits with a non-zero exit value.
+set -e
+
+# Turn on / off the debug mode
+#set -x
+
+# Load configuration
+source ./scripts/common
+
+echo -e "Current project configuration is:"
+echo -e "-> Project ID      = $PROJECT_ID"
+echo -e "-> Cluster Name    = $CLUSTER_NAME"
+echo -e "-> Cluster Zone    = $CLUSTER_ZONE"
+echo -e "-> Number Of Nodes = $CLUSTER_NODES"
+echo -e "\n"
+
+# Expose application to the internet by using Ingress
+kubectl apply -f ./ingress/ingress.yaml --namespace=live
+
+# Verify ingress
+kubectl describe ingress basic-ingress --namespace=live

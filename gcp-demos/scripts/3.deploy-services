@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Force the shell to immediately if a single command exits with a non-zero exit value.
+set -e
+
+# Turn on / off the debug mode
+#set -x
+
+# Load configuration
+source ./scripts/common
+
+echo -e "Current project configuration is:"
+echo -e "-> Project ID      = $PROJECT_ID"
+echo -e "-> Cluster Name    = $CLUSTER_NAME"
+echo -e "-> Cluster Zone    = $CLUSTER_ZONE"
+echo -e "-> Number Of Nodes = $CLUSTER_NODES"
+echo -e "\n"
+
+# Deploy a backend service
+echo -e "Creating services ..."
+kubectl apply -f ./service/service.1.yaml --namespace=live
+kubectl apply -f ./service/service.2.yaml --namespace=live
+
+# Describe service
+kubectl get services nginx-app --namespace=live
+kubectl get services hello-app --namespace=live
