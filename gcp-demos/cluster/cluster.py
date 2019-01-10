@@ -4,7 +4,7 @@ def GenerateConfig(context):
 
     cluster_name = context.properties['CLUSTER_NAME']
     cluster_zone = context.properties['CLUSTER_ZONE']
-    number_of_nodes = context.properties['NUM_NODES']
+    number_of_nodes = context.properties['CLUSTER_NODES']
 
     resources = []
     resources.append({
@@ -22,7 +22,9 @@ def GenerateConfig(context):
                             'compute',
                             'devstorage.read_only',
                             'logging.write',
-                            'monitoring'
+                            'monitoring',
+                            'servicecontrol',
+                            'trace.append'
                             ]
                         ]
                     }

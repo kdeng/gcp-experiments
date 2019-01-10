@@ -55,9 +55,8 @@ data:
 
 
 ################################################################################
-
-
-
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: spring-boot-app-with-nginx
   labels:
@@ -88,7 +87,7 @@ spec:
         - hostPort: 81
         imagePullPolicy: "Always"
         securityContext:
-            privileged: true
+          privileged: true
         volumeMounts:
         - name: varlog
           mountPath: /var/log
