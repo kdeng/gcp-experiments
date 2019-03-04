@@ -7,29 +7,29 @@ set -e
 #set -x
 
 # Load configuration
-source ./scripts/common
+source ./common
 
-echo -e "Current project configuration is:"
-echo -e "-> Project ID      = $PROJECT_ID"
-echo -e "-> Cluster Name    = $CLUSTER_NAME"
-echo -e "-> Cluster Zone    = $CLUSTER_ZONE"
-echo -e "-> Number Of Nodes = $CLUSTER_NODES"
+echo -e "\n\nCurrent project configuration is:\n"
+echo -e "-> Project ID      = $PROJECT_ID\n"
+echo -e "-> Cluster Name    = $CLUSTER_NAME\n"
+echo -e "-> Cluster Zone    = $CLUSTER_ZONE\n"
+echo -e "-> Number Of Nodes = $CLUSTER_NODES\n"
 echo -e "\n"
 
 # Activate service account by key file
 echo -e "Activate service account ..."
-gcloud auth activate-service-account --key-file="$ACCOUNT_KEY_FILE"
+#gcloud auth activate-service-account --key-file="$ACCOUNT_KEY_FILE"
 
 # Enable Kubernetes Engine
 echo -e "\n-> Enabling Deployment Manager APIs ..."
-gcloud services enable deploymentmanager.googleapis.com --project=$PROJECT_ID
+#gcloud services enable deploymentmanager.googleapis.com --project=$PROJECT_ID
 
 # Create a new cluster
 echo -e "\n-> Creating cluster '$CLUSTER_NAME' ..."
 gcloud deployment-manager deployments create "$CLUSTER_NAME" \
     --quiet \
-    --template=./cluster/cluster.py \
-    --properties=CLUSTER_NAME:$CLUSTER_NAME,CLUSTER_ZONE:$CLUSTER_ZONE,NUM_NODES:$NUM_NODES \
+    --template=../cluster/cluster.py \
+    --properties=CLUSTER_NAME:$CLUSTER_NAME,CLUSTER_ZONE:$CLUSTER_ZONE,CLUSTER_NODES:$CLUSTER_NODES \
     --project="$PROJECT_ID"
 
 # Get cluster credentials

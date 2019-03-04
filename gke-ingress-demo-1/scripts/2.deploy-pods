@@ -7,7 +7,7 @@ set -e
 #set -x
 
 # Load configuration
-source ./scripts/common
+source ./common
 
 echo -e "Current project configuration is:"
 echo -e "-> Project ID      = $PROJECT_ID"
@@ -23,7 +23,7 @@ gcloud container clusters get-credentials "$CLUSTER_NAME" \
 
 # Create dev and live namespaces
 echo -e "Creating namespace ..."
-find ./namespaces -type f -name "*.yaml" -exec kubectl create -f {} \;
+find ../namespaces -type f -name "*.yaml" -exec kubectl create -f {} \;
 
 # List all namespaces
 echo -e "Listing all namespaces ..."
@@ -31,8 +31,8 @@ kubectl get namespaces --show-labels
 
 # Apply POD to cluster by using deployment.yaml
 echo -e "Deploy applications ..."
-kubectl apply -f ./deployment/deployment.1.yaml
-kubectl apply -f ./deployment/deployment.2.yaml
+kubectl apply -f ../deployment/deployment.1.yaml
+kubectl apply -f ../deployment/deployment.2.yaml
 
 # List deployment under namespace live
 kubectl get deployment --namespace=live

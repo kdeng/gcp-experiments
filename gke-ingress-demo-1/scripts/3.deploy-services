@@ -7,7 +7,7 @@ set -e
 #set -x
 
 # Load configuration
-source ./scripts/common
+source ./common
 
 echo -e "Current project configuration is:"
 echo -e "-> Project ID      = $PROJECT_ID"
@@ -16,8 +16,11 @@ echo -e "-> Cluster Zone    = $CLUSTER_ZONE"
 echo -e "-> Number Of Nodes = $CLUSTER_NODES"
 echo -e "\n"
 
-# Expose application to the internet by using Ingress
-kubectl apply -f ./ingress/ingress.yaml --namespace=live
+# Deploy a backend service
+echo -e "Creating services ..."
+kubectl apply -f ../service/service.1.yaml --namespace=live
+kubectl apply -f ../service/service.2.yaml --namespace=live
 
-# Verify ingress
-kubectl describe ingress basic-ingress --namespace=live
+# Describe service
+kubectl get services nginx-app-service --namespace=live
+kubectl get services hello-app-service --namespace=live

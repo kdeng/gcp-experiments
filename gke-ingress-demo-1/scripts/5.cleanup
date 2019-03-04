@@ -7,7 +7,7 @@ set -e
 #set -x
 
 # Load configuration
-source ./scripts/common
+source ./common
 
 echo -e "Current project configuration is:"
 echo -e "-> Project ID      = $PROJECT_ID"
@@ -17,14 +17,14 @@ echo -e "-> Number Of Nodes = $CLUSTER_NODES"
 echo -e "\n"
 
 echo -e "Deleting ingress"
-kubectl delete -f ./ingress/ingress.yaml --namespace=live
+kubectl delete -f ../ingress/ingress.yaml --namespace=live
 
 echo -e "Deleting services"
-kubectl delete -f ./service/service.1.yaml
-kubectl delete -f ./service/service.2.yaml
+kubectl delete -f ../service/service.1.yaml
+kubectl delete -f ../service/service.2.yaml
 
 echo -e "Deleting namespaces"
-find ./namespaces -type f -name "*.yaml" -exec kubectl delete -f {} \;
+find ../namespaces -type f -name "*.yaml" -exec kubectl delete -f {} \;
 
 echo -e "Delete cluster"
 gcloud deployment-manager deployments delete $CLUSTER_NAME \
