@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-kotlin-app
+spec:
+  replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: my-kotlin-app
+  template:
+    metadata:
+      labels:
+        app: my-kotlin-app
+    spec:
+      imagePullSecrets:
+      - name: kdeng
+      containers:
+      - name: my-kotlin-app
+        image: kdeng/jenkins-demo:1.1-SNAPSHOT
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 500m
+            memory: 128Mi
+          requests:
+            cpu: 500m
+            memory: 128Mi

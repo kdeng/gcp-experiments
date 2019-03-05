@@ -50,3 +50,19 @@ delete-app-images:
 deploy-apps:
 	kubectl apply -f ./configs/kubernetes/services.yaml
 	-sed -e 's~<PROJECT_ID>~$(PROJECT_ID)~g' ./configs/kubernetes/deployments.yaml | kubectl apply -f -
+
+get-apps:
+	kubectl get pods && kubectl get svc && kubectl get svc istio-ingressgateway -n istio-system
+
+deploy-istio:
+	-kubectl create namespace istio-system
+	kubectl apply -f ./configs/istio/istio.yaml
+	kubectl label namespace default istio-injection=enabled --overwrite
+	sleep 60
+	kubectl delete pod -n istio-system -l app=prometheus
+
+ingress:
+	kubectl apply -f ./configs/istio/ingress.yaml
+
+egress:
+	kubectl apply -f ./configs/istio/egress.yaml
